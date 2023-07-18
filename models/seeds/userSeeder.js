@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
 const User = require('../user')
+const Times = require('../times')
 const db = require('../../config/mongoose')
 const bcrypt = require('bcryptjs')
 
@@ -25,6 +26,13 @@ db.once('open', () => {
                 account: SEED_USER.account,
                 password: hash
             }))
+            .then(user => {
+                const userId = user._id
+                return Promise.all(Array.from(
+                    { length: 1 },
+                    (_, i) => Times.create({ kissTimes: 0, userId })
+                ))
+            })
             .then(() => {
                 console.log('done.')
                 process.exit()
