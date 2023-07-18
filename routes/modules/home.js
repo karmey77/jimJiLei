@@ -12,5 +12,14 @@ router.get('/', (req, res) => {
         .catch(error => console.error(error))
 })
 
+router.get('/ranking', (req, res) => {
+    // const userId = req.user._id
+    // Times.findOne({ userId })         // Restaurant.find({ userId })
+    //     .lean()
+    //     .then(times => res.render('index', { kissTimes: times.kissTimes }))
+    //     .catch(error => console.error(error))
+})
+
+
 // 匯出路由模組
 module.exports = router

@@ -31,6 +31,22 @@ dataPanel.addEventListener("click", function (event) {
         kiss += 1
         kissBox.innerHTML = `<h2>親了 ${kiss} 次了</h2>`
 
+        // 將點擊次數發送到後端
+        const payload = { kissCount: kiss };
+        fetch('/update-kiss-count', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            });
+
         pleaseKiss.addEventListener("ended", function () {
             kissEnd = true
         });
