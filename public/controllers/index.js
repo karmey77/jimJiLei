@@ -47,6 +47,47 @@ dataPanel.addEventListener("click", function (event) {
                 console.log(error)
             });
 
+        fetch('/leaderboard')
+            .then(response => response.json())
+            .then(data => {
+                // 生成排行榜內容
+                let leaderboardHtml = '<table id="lbtable">';
+                // 第一名
+                leaderboardHtml +=
+                    `
+                        <tr>
+                            <td class="number">1</td>
+                            <td class="name">${data[0].name}</td>
+                            <td class="points">
+                                給國王金了${data[0].kissTimes}下<img class="gold-medal"
+                                src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
+                                alt="gold medal" />
+                            </td>
+                        </tr>
+                    `
+
+                // 其他
+                for (let i = 1; i < data.length; i++) {
+                    const user = data[i];
+                    leaderboardHtml +=
+                        `
+                        <tr>
+                            <td class="number">${i + 1}</td>
+                            <td class="name">${user.name}</td>
+                            <td class="points"> 給國王金了 ${user.kissTimes} 下</td>
+                        </tr>
+                    `
+                }
+                leaderboardHtml += '</table>'
+
+                // 將排行榜內容插入到 HTML 元素中
+                const leaderboardElement = document.getElementById('lbtable');
+                leaderboardElement.innerHTML = leaderboardHtml;
+            })
+            .catch(error => {
+                console.error('無法獲取排行榜數據:', error);
+            });
+
         pleaseKiss.addEventListener("ended", function () {
             kissEnd = true
         });

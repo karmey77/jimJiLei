@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 const User = require('../../models/user')
+const Times = require('../../models/times')
 const bcrypt = require('bcryptjs')
 
 router.get('/login', (req, res) => {
@@ -52,7 +53,7 @@ router.post('/register', (req, res) => {
             .then(salt => bcrypt.hash(password, salt)) // 為使用者密碼「加鹽」，產生雜湊值
             .then(hash => User.create({
                 name,
-                email,
+                account,
                 password: hash // 用雜湊值取代原本的使用者密碼
             }))
             .then(user => {

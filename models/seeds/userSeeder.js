@@ -14,6 +14,18 @@ const SEED_USERS = [{
     name: '子民B',
     account: 'user2@example.com',
     password: '1'
+}, {
+    name: '子民C',
+    account: 'user3@example.com',
+    password: '1'
+}, {
+    name: '子民D',
+    account: 'user4@example.com',
+    password: '1'
+}, {
+    name: '子民E',
+    account: 'user5@example.com',
+    password: '1'
 }]
 
 db.once('open', () => {
@@ -30,7 +42,7 @@ db.once('open', () => {
                 const userId = user._id
                 return Promise.all(Array.from(
                     { length: 1 },
-                    (_, i) => Times.create({ kissTimes: 0, userId })
+                    (_, i) => Times.create({ kissTimes: i, userId })
                 ))
             })
             .then(() => {

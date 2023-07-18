@@ -1,13 +1,20 @@
-// 引用 Express 與 Express 路由器
-const express = require('express')
-const router = express.Router()
-const Times = require('../../models/times')
+// 假設您使用 Express 框架
+const express = require('express');
+const router = express.Router();
 const User = require('../../models/user')
+const Times = require('../../models/times')
 
-// 定義首頁路由
+// 假設您的排行榜數據存儲在一個名為 leaderboard 的陣列中
+// const leaderboard = [
+//     { name: '玩家1', kissTimes: 100 },
+//     { name: '玩家2', kissTimes: 90 },
+//     { name: '玩家3', kissTimes: 80 },
+//     { name: '玩家4', kissTimes: 70 },
+//     { name: '玩家5', kissTimes: 60 }
+// ]
+
+// 設定 /leaderboard 路由，將排行榜數據作為 JSON 回應
 router.get('/', (req, res) => {
-    const userId = req.user._id
-
     async function generateLeaderBoard() {
         try {
             const fullList = await Times.find()
@@ -43,18 +50,8 @@ router.get('/', (req, res) => {
         try {
             const leaderboard = await generateLeaderBoard();
             console.log(leaderboard);
+            res.json(leaderboard)
 
-            Times.findOne({ userId })         // Restaurant.find({ userId })
-                .lean()
-                .then(times => res.render('index', {
-                    kissTimes: times.kissTimes,
-                    leaderboard1: leaderboard[0],
-                    leaderboard2: leaderboard[1],
-                    leaderboard3: leaderboard[2],
-                    leaderboard4: leaderboard[3],
-                    leaderboard5: leaderboard[4]
-                }))
-                .catch(error => console.error(error))
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: '發生錯誤' });
@@ -62,8 +59,6 @@ router.get('/', (req, res) => {
     }
 
     main()
-})
+});
 
-
-// 匯出路由模組
 module.exports = router
