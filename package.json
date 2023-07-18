@@ -1,0 +1,22 @@
+{
+  "name": "jimjilei",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node models/seeds/restaurantSeeder.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karmey77/jimJiLei.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karmey77/jimJiLei/issues"
+  },
+  "homepage": "https://github.com/karmey77/jimJiLei#readme"
+}
