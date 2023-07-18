@@ -1,9 +1,49 @@
 <div class="container mt-5" id="header">
     <h1 align="center">青蛙國王金幾勒</h1>
     <div id="data-panel" align="center">
-        <!-- print dynamic data here-->
+        <tr>
+            <h2>親了 5 次了</h2>
+            <img src="/assets/frogKingWait.jpeg" width="300" class="img" alt="frog king kiss">
+        </tr>
     </div>
 </div>
+<script>
+    kissImg = [{
+        image: 'assets/frogKingWait.jpeg'
+    }, { image: 'assets/frogKingKiss.jpeg' }]
+    let kissTimes = 0
+    const pleaseKiss = new Audio("assets/giveMeAKissTaiwanese.mp3")
+    const kissSound = new Audio("assets/quickKiss.mp3")
+    const dataPanel = document.querySelector('#data-panel')
+    let kissEnd = true
 
-<script src="./main.js"></script>
+    dataPanel.addEventListener("click", function (event) {
+        if (event.target.matches(".img") && kissEnd) {
+            kissEnd = false
+
+            // Sounds
+            kissSound.play()
+            // Img
+            const imgBlock = event.target
+            imgBlock.src = kissImg[1].image
+
+            // Img-back
+            kissSound.addEventListener("ended", function () {
+                kissSound.currentTime = 0;
+                imgBlock.src = kissImg[0].image
+                pleaseKiss.play()
+            });
+
+            // Kisses
+            const kissBox = event.target.parentElement.children[0]
+            let kiss = parseInt(kissBox.innerText.match(/\d+/)[0])
+            kiss += 1
+            kissBox.innerHTML = `<h2>親了 ${kiss} 次了</h2>`
+
+            pleaseKiss.addEventListener("ended", function () {
+                kissEnd = true
+            });
+        }
+    })
+</script>
 <link rel="stylesheet" href="/stylesheets/style.css">

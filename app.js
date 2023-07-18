@@ -16,7 +16,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
-app.use(express.static('public')) // 要有這個才讀得到css
+app.use(express.static('public'))
 app.set('view engine', 'hbs')
 
 // app.use(session({
