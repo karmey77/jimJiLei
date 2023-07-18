@@ -9,11 +9,11 @@ const bcrypt = require('bcryptjs')
 const SEED_USERS = [{
     name: '子民A',
     account: 'user1@example.com',
-    password: '12345678'
+    password: '1'
 }, {
     name: '子民B',
     account: 'user2@example.com',
-    password: '12345678'
+    password: '1'
 }]
 
 db.once('open', () => {

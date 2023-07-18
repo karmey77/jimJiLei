@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/user')
+const Times = require('../models/times')
 const bcrypt = require('bcryptjs')
 const FacebookStrategy = require('passport-facebook').Strategy
 
@@ -32,7 +33,7 @@ module.exports = app => {
         profileFields: ['email', 'displayName']
     }, (accessToken, refreshToken, profile, done) => {
         const { name, email } = profile._json
-        User.findOne({ account })
+        User.findOne({ account: email })
             .then(user => {
                 if (user) return done(null, user)
                 const randomPassword = Math.random().toString(36).slice(-8)
@@ -44,6 +45,10 @@ module.exports = app => {
                         account: email,
                         password: hash
                     }))
+                    .then(user => {
+                        const userId = user._id
+                        return Times.create({ kissTimes: 0, userId })
+                    })
                     .then(user => done(null, user))
                     .catch(err => done(err, false))
             })

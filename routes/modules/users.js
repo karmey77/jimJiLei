@@ -55,6 +55,10 @@ router.post('/register', (req, res) => {
                 email,
                 password: hash // 用雜湊值取代原本的使用者密碼
             }))
+            .then(user => {
+                const userId = user._id
+                return Times.create({ kissTimes: 0, userId })
+            })
             .then(() => res.redirect('/'))
             .catch(err => console.log(err))
     })
