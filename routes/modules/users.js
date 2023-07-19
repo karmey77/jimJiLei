@@ -39,7 +39,7 @@ router.post('/register', (req, res) => {
     }
     User.findOne({ account }).then(user => {
         if (user) {
-            errors.push({ message: '這個 account 已經註冊過了。' })
+            errors.push({ message: '這個 愛情帳號 已經註冊過了。' })
             return res.render('register', {
                 errors,
                 name,
@@ -67,7 +67,7 @@ router.post('/register', (req, res) => {
 
 router.get('/logout', (req, res) => {
     req.logout()
-    req.flash('success_msg', '你已經成功登出。')
+    req.flash('success_msg', '你已經成功登出愛情。')
     res.redirect('/users/login')
 })
 
