@@ -23,10 +23,10 @@ router.post('/register', (req, res) => {
     const { name, account, password, confirmPassword } = req.body
     const errors = []
     if (!name || !account || !password || !confirmPassword) {
-        errors.push({ message: '所有欄位都是必填。' })
+        errors.push({ message: '所有愛情欄位都是必填！' })
     }
     if (password !== confirmPassword) {
-        errors.push({ message: '密碼與確認密碼不相符！' })
+        errors.push({ message: '愛情密碼 與 愛情確認密碼不相符！' })
     }
     if (errors.length) {
         return res.render('register', {
