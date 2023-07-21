@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
     async function main() {
         try {
             const leaderboard = await generateLeaderBoard();
-            console.log(leaderboard);
+            // console.log(leaderboard);
             res.json(leaderboard)
 
         } catch (error) {

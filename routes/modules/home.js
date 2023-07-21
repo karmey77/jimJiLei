@@ -46,7 +46,7 @@ router.get('/', (req, res) => {
             .lean()
             .then(registerSubjects => registerSubjects.length)
             .catch(error => console.error(error))
-            console.log(registerNumber);
+            // console.log(registerNumber);
 
             Times.findOne({ userId })         // Restaurant.find({ userId })
                 .lean()
