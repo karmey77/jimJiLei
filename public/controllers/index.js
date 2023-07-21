@@ -55,7 +55,7 @@ dataPanel.addEventListener("click", function (event) {
                             <td class="number">1</td>
                             <td class="name">${data[0].name}</td>
                             <td class="points">
-                                金了${data[0].kissTimes}下<img class="gold-medal"
+                                金了 ${data[0].kissTimes} 下<img class="gold-medal"
                                 src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
                                 alt="gold medal" />
                             </td>

@@ -42,11 +42,16 @@ router.get('/', (req, res) => {
     async function main() {
         try {
             const leaderboard = await generateLeaderBoard();
-            // console.log(leaderboard);
+            const registerNumber = await User.find()
+            .lean()
+            .then(registerSubjects => registerSubjects.length)
+            .catch(error => console.error(error))
+            console.log(registerNumber);
 
             Times.findOne({ userId })         // Restaurant.find({ userId })
                 .lean()
                 .then(times => res.render('index', {
+                    registerNumber: registerNumber-5,
                     kissTimes: times.kissTimes,
                     leaderboard1: leaderboard[0],
                     leaderboard2: leaderboard[1],
