@@ -5,12 +5,12 @@
             {{> message}}
             <form action="/users/register" method="POST">
                 <div class="mb-3">
-                    <label for="name" class="mb-2">愛情暱稱（顯示在排行榜）/ Name</label>
+                    <label for="name" class="mb-2">愛情暱稱（會顯示在排行榜上）/ Nickname</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name"
                         value="{{ name }}">
                 </div>
                 <div class="mb-3">
-                    <label for="account" class="mb-2">愛情帳號（是不是電子郵件都沒關係）/ Account</label>
+                    <label for="account" class="mb-2">愛情帳號（建議為 6 字元以上的英數組合）/ Account</label>
                     <input type="account" id="account" name="account" class="form-control" placeholder="Enter Account"
                         value="{{ account }}">
                 </div>
