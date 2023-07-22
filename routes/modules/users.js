@@ -6,7 +6,22 @@ const Times = require('../../models/times')
 const bcrypt = require('bcryptjs')
 
 router.get('/login', (req, res) => {
-    res.render('login')
+
+    async function getRegisteredNumber() {
+        try {
+            return await User.find()
+                .lean()
+                .then(registerSubjects => registerSubjects.length)
+                .catch(error => console.error(error))
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: '發生錯誤' });
+        }
+    }
+
+    getRegisteredNumber()
+    .then(registerNumber =>  res.render('login', { registerNumber: registerNumber - 5 }))
+    .catch(error => console.error(error))
 })
 
 // 加入 middleware，驗證 request 登入狀態
@@ -16,7 +31,23 @@ router.post('/login', passport.authenticate('local', {
 }))
 
 router.get('/register', (req, res) => {
-    res.render('register')
+
+    async function getRegisteredNumber() {
+        try {
+            return await User.find()
+                .lean()
+                .then(registerSubjects => registerSubjects.length)
+                .catch(error => console.error(error))
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: '發生錯誤' });
+        }
+    }
+
+    getRegisteredNumber()
+    .then(registerNumber =>  res.render('register', { registerNumber: registerNumber - 5 }))
+    .catch(error => console.error(error))
+    // res.render('register')
 })
 
 router.post('/register', (req, res) => {
