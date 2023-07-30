@@ -69,6 +69,20 @@ router.get('/', (req, res) => {
     main()
 })
 
+router.get('/get-kiss-count', async (req, res) => {
+    const userId = req.user._id
+    try {
+        const times = await Times.findOne({ userId })         // Restaurant.find({ userId })
+        .lean()
+        .then(time => {return time.kissTimes})
+        .catch(error => console.error(error))
+
+        res.json(times+1)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: '發生錯誤，無法更新點擊次數' });
+    }
+});
 
 // 匯出路由模組
 module.exports = router

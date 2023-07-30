@@ -26,31 +26,37 @@ dataPanel.addEventListener("click", function (event) {
 
         // Kisses
         const kissBox = event.target.parentElement.children[0]
-        let kiss = parseInt(kissBox.innerText.match(/\d+/)[0])
-        // updateTimes(kiss)
-        kiss += 1
-        kissBox.innerHTML = `<h2>親了 ${kiss} 次了</h2>`
-
-        // 將點擊次數發送到後端
-        const payload = { kissCount: kiss };
-        fetch('/update-kiss-count', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
+        // let kiss = parseInt(kissBox.innerText.match(/\d+/)[0])
+        // kissBox.innerHTML = `<h2>親了 ${kiss} 次了</h2>`
+        fetch('/get-kiss-count')
+            .then(response => response.json())
+            .then(kissTimes => {
+                kissBox.innerHTML = `<h2>親了 ${kissTimes} 次了</h2>`
+            })
             .then(resp => {
                 console.log(resp)
 
-                fetch('/leaderboard')
-                    .then(response => response.json())
-                    .then(data => {
-                        // 生成排行榜內容
-                        let leaderboardHtml = '<table id="lbtable">';
-                        // 第一名
-                        leaderboardHtml +=
-                            `
+                let kiss = parseInt(kissBox.innerText.match(/\d+/)[0])
+                // 將點擊次數發送到後端
+                const payload = { kissCount: kiss };
+                fetch('/update-kiss-count', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(resp => {
+                        console.log(resp)
+
+                        fetch('/leaderboard')
+                            .then(response => response.json())
+                            .then(data => {
+                                // 生成排行榜內容
+                                let leaderboardHtml = '<table id="lbtable">';
+                                // 第一名
+                                leaderboardHtml +=
+                                    `
                         <tr>
                             <td class="number">1</td>
                             <td class="name">${data[0].name}</td>
@@ -62,32 +68,35 @@ dataPanel.addEventListener("click", function (event) {
                         </tr>
                     `
 
-                        // 其他
-                        for (let i = 1; i < data.length; i++) {
-                            const user = data[i];
-                            leaderboardHtml +=
-                                `
+                                // 其他
+                                for (let i = 1; i < data.length; i++) {
+                                    const user = data[i];
+                                    leaderboardHtml +=
+                                        `
                         <tr>
                             <td class="number">${i + 1}</td>
                             <td class="name">${user.name}</td>
                             <td class="points"> 金 ${user.kissTimes} 下</td>
                         </tr>
                     `
-                        }
-                        leaderboardHtml += '</table>'
+                                }
+                                leaderboardHtml += '</table>'
 
-                        // 將排行榜內容插入到 HTML 元素中
-                        const leaderboardElement = document.getElementById('lbtable');
-                        leaderboardElement.innerHTML = leaderboardHtml;
+                                // 將排行榜內容插入到 HTML 元素中
+                                const leaderboardElement = document.getElementById('lbtable');
+                                leaderboardElement.innerHTML = leaderboardHtml;
+                            })
+                            .catch(error => {
+                                console.error('無法獲取排行榜數據:', error);
+                            });
                     })
                     .catch(error => {
-                        console.error('無法獲取排行榜數據:', error);
+                        console.log(error)
                     });
             })
             .catch(error => {
-                console.log(error)
+                console.error('無法獲取親吻數據:', error);
             });
-
 
         pleaseKiss.addEventListener("ended", function () {
             kissEnd = true
